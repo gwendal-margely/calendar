@@ -1,0 +1,8 @@
+com\adopteunrdv\AdopteUnRDVApplication.class
+com\adopteunrdv\repository\AppUserRepository.class
+com\adopteunrdv\model\AppUser.class
+com\adopteunrdv\model\Appointment.class
+com\adopteunrdv\repository\AppointmentRepository.class
+com\adopteunrdv\service\AppUserService.class
+com\adopteunrdv\service\AppointmentService.class
+com\adopteunrdv\controller\AppController.class

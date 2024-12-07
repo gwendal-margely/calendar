@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Calendrier</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Calendrier</h1>
+<h2 th:text="${date}"></h2>
+<table>
+    <thead>
+    <tr>
+        <th>Heure</th>
+        <th>Statut</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.startTime}"></td>
+        <td th:text="${appointment.status}"></td>
+        <td>
+            <form th:action="@{/book}" method="post">
+                <input type="hidden" name="id" th:value="${appointment.id}">
+                <input type="hidden" name="date" th:value="${appointment.date}">
+                <input type="hidden" name="startTime" th:value="${appointment.startTime}">
+                <input type="hidden" name="endTime" th:value="${appointment.endTime}">
+                <button type="submit">Réserver</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
