@@ -181,3 +181,60 @@ RôleUser. Actions possibles :
 RôleAdmin. Actions possibles :
 — Toutes les actions possibles sur les réservations de tout le monde
 ```
+
+# MCD
+
+## Entité : AppUser
+- id **(clé primaire)**
+- username
+- password
+- email
+- role
+
+## Entité : Appointment
+- id (clé primaire)
+- user_id *(clé étrangère vers AppUser)*
+- date
+- startTime
+- endTime
+- status
+
+## Entité : Constraints
+- id **(clé primaire)**
+- enabledDays
+- maxPerSlot
+- minutesBetweenSlots
+- start
+- end
+
+
+# MLD
+
+``` sql
+CREATE TABLE APP_USER (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    role VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE APPOINTMENT (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT,
+    date DATE,
+    start_time TIME,
+    end_time TIME,
+    status VARCHAR(50),
+    FOREIGN KEY (user_id) REFERENCES APP_USER(id)
+);
+
+CREATE TABLE CONSTRAINTS (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    enabledDays VARCHAR(50),
+    maxPerSlot INT,
+    minutesBetweenSlots BIGINT,
+    start TIME,
+    end TIME
+); 
+```

@@ -16,5 +16,17 @@ CREATE TABLE APPOINTMENT (
                              FOREIGN KEY (user_id) REFERENCES APP_USER(id)
 );
 
+CREATE TABLE CONSTRAINTS (
+                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
+                             enabledDays VARCHAR(50),
+                             maxPerSlot INT,
+                             minutesBetweenSlots BIGINT,
+                             start TIME,
+                             end TIME
+);
+
+-- Insertion de données de test
 INSERT INTO APP_USER (username, password, email, role) VALUES ('admin', 'adminpassword', 'admin@example.com', 'ADMIN');
 INSERT INTO APP_USER (username, password, email, role) VALUES ('user', 'userpassword', 'user@example.com', 'USER');
+
+INSERT INTO CONSTRAINTS (enabledDays, maxPerSlot, minutesBetweenSlots, start, end) VALUES ('1,2,3,4,5,6,7', 30, 60, '11:00:00', '18:00:00');
