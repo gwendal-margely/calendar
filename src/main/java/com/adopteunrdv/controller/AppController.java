@@ -2,6 +2,7 @@ package com.adopteunrdv.controller;
 
 import com.adopteunrdv.model.AppUser;
 import com.adopteunrdv.model.Appointment;
+import com.adopteunrdv.model.Constraints;
 import com.adopteunrdv.service.AppUserService;
 import com.adopteunrdv.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,4 +68,24 @@ public class AppController {
         appointmentService.save(appointment);
         return "redirect:/calendar";
     }
+
+    @GetMapping("/appointments")
+    public String listAppointments(Model model) {
+        List<Appointment> appointments = appointmentService.findAll();
+        model.addAttribute("appointments", appointments);
+        return "appointments";
+    }
+
+    @PostMapping("/appointments/delete")
+    public String deleteAppointment(Long id) {
+        appointmentService.delete(id);
+        return "redirect:/appointments";
+    }
+
+    @PostMapping("/constraints")
+    public String saveConstraints(Constraints constraints) {
+        // Logique pour sauvegarder les contraintes (à implémenter)
+        return "redirect:/calendar";
+    }
+
 }

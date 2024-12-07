@@ -25,4 +25,8 @@ public class AppointmentService {
     public List<Appointment> findByDate(LocalDate date) {
         return appointmentRepository.findByDate(date);
     }
+
+    public List<Appointment> findAll() {
+        return appointmentRepository.findAll();
+    }
 }

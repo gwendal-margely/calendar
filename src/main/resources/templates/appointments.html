@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rendez-vous</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<h1>Rendez-vous</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Heure de début</th>
+        <th>Heure de fin</th>
+        <th>Statut</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="appointment : ${appointments}">
+        <td th:text="${appointment.date}"></td>
+        <td th:text="${appointment.startTime}"></td>
+        <td th:text="${appointment.endTime}"></td>
+        <td th:text="${appointment.status}"></td>
+        <td>
+            <form th:action="@{/appointments/delete}" method="post">
+                <input type="hidden" name="id" th:value="${appointment.id}">
+                <button type="submit">Annuler</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
