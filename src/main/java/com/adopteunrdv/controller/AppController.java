@@ -47,8 +47,14 @@ public class AppController {
 
     @PostMapping("/login")
     public String loginUser(AppUser user) {
-        // Logique de connexion ici (à implémenter)
-        return "redirect:/calendar";
+        AppUser existingUser = appUserService.findByUsername(user.getUsername());
+        if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
+            // Logique de connexion réussie
+            return "redirect:/calendar";
+        } else {
+            // Logique de connexion échouée
+            return "redirect:/login?error";
+        }
     }
 
     @GetMapping("/calendar")
