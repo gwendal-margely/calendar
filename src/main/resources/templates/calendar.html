@@ -20,16 +20,33 @@
         <td th:text="${appointment.startTime}"></td>
         <td th:text="${appointment.status}"></td>
         <td>
-            <form th:action="@{/book}" method="post">
+            <form th:action="@{/appointments/delete}" method="post">
                 <input type="hidden" name="id" th:value="${appointment.id}">
-                <input type="hidden" name="date" th:value="${appointment.date}">
-                <input type="hidden" name="startTime" th:value="${appointment.startTime}">
-                <input type="hidden" name="endTime" th:value="${appointment.endTime}">
-                <button type="submit">Réserver</button>
+                <button type="submit">Annuler</button>
             </form>
         </td>
     </tr>
     </tbody>
 </table>
+<h2>Ajouter un rendez-vous</h2>
+<form th:action="@{/book}" method="post">
+    <div>
+        <label for="date">Date :</label>
+        <input type="date" id="date" name="date" required>
+    </div>
+    <div>
+        <label for="startTime">Heure de début :</label>
+        <input type="time" id="startTime" name="startTime" required>
+    </div>
+    <div>
+        <label for="endTime">Heure de fin :</label>
+        <input type="time" id="endTime" name="endTime" required>
+    </div>
+    <div>
+        <label for="status">Statut :</label>
+        <input type="text" id="status" name="status" required>
+    </div>
+    <button type="submit">Réserver</button>
+</form>
 </body>
 </html>
