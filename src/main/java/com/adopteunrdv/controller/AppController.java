@@ -5,6 +5,7 @@ import com.adopteunrdv.model.Appointment;
 import com.adopteunrdv.model.Constraints;
 import com.adopteunrdv.service.AppUserService;
 import com.adopteunrdv.service.AppointmentService;
+import com.adopteunrdv.service.ConstraintsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -23,6 +25,9 @@ public class AppController {
 
     @Autowired
     private AppointmentService appointmentService;
+
+    @Autowired
+    private ConstraintsService constraintsService;
 
     @GetMapping("/")
     public String home() {
@@ -46,14 +51,16 @@ public class AppController {
     }
 
     @PostMapping("/login")
-    public String loginUser(AppUser user) {
+    public String loginUser(AppUser user, Model model) {
         AppUser existingUser = appUserService.findByUsername(user.getUsername());
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
             // Logique de connexion réussie
+            model.addAttribute("user", existingUser);
             return "redirect:/calendar";
         } else {
             // Logique de connexion échouée
-            return "redirect:/login?error";
+            model.addAttribute("error", "Nom d'utilisateur ou mot de passe incorrect");
+            return "login";
         }
     }
 
@@ -68,9 +75,11 @@ public class AppController {
         return "calendar";
     }
 
-
     @PostMapping("/book")
-    public String bookAppointment(Appointment appointment) {
+    public String bookAppointment(Appointment appointment, @RequestParam("date") String dateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate date = LocalDate.parse(dateString, formatter);
+        appointment.setDate(date);
         appointmentService.save(appointment);
         return "redirect:/calendar";
     }
@@ -83,15 +92,14 @@ public class AppController {
     }
 
     @PostMapping("/appointments/delete")
-    public String deleteAppointment(Long id) {
+    public String deleteAppointment(@RequestParam Long id) {
         appointmentService.delete(id);
         return "redirect:/appointments";
     }
 
     @PostMapping("/constraints")
     public String saveConstraints(Constraints constraints) {
-        // Logique pour sauvegarder les contraintes (à implémenter)
+        constraintsService.save(constraints);
         return "redirect:/calendar";
     }
-
 }

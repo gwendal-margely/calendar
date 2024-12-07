@@ -22,4 +22,51 @@ public class Constraints {
     public static LocalTime end = LocalTime.of(18, 0);
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public static ArrayList<Integer> getEnabledDays() {
+        return enabledDays;
+    }
+
+    public static void setEnabledDays(ArrayList<Integer> enabledDays) {
+        Constraints.enabledDays = enabledDays;
+    }
+
+    public static int getMaxPerSlot() {
+        return maxPerSlot;
+    }
+
+    public static void setMaxPerSlot(int maxPerSlot) {
+        Constraints.maxPerSlot = maxPerSlot;
+    }
+
+    public static long getMinutesBetweenSlots() {
+        return minutesBetweenSlots;
+    }
+
+    public static void setMinutesBetweenSlots(long minutesBetweenSlots) {
+        Constraints.minutesBetweenSlots = minutesBetweenSlots;
+    }
+
+    public static LocalTime getStart() {
+        return start;
+    }
+
+    public static void setStart(LocalTime start) {
+        Constraints.start = start;
+    }
+
+    public static LocalTime getEnd() {
+        return end;
+    }
+
+    public static void setEnd(LocalTime end) {
+        Constraints.end = end;
+    }
 }
