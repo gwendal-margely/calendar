@@ -6,7 +6,7 @@
 S5.A.01 - Frameworks Web
 BUT3 - Info
 Philippe Mathieu
-2024–
+2024–2025
 ```
 # Objectifs
 
@@ -194,7 +194,7 @@ erDiagram
         VARCHAR(50) username UK
         VARCHAR(100) password
         VARCHAR(100) email
-        VARCHAR(50) role
+        ENUM role
     }
 
     APPOINTMENT {
@@ -203,7 +203,7 @@ erDiagram
         DATE date
         TIME start_time
         TIME end_time
-        VARCHAR(50) status
+        ENUM status
     }
 
     CONSTRAINTS {
