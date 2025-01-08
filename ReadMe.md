@@ -182,7 +182,42 @@ RôleAdmin. Actions possibles :
 — Toutes les actions possibles sur les réservations de tout le monde
 ```
 
-# MCD
+# Base de Donnée MCD
+
+``` mermaid
+---
+title: MCD
+---
+erDiagram
+    APP_USER {
+        BIGINT id PK
+        VARCHAR(50) username UK
+        VARCHAR(100) password
+        VARCHAR(100) email
+        VARCHAR(50) role
+    }
+
+    APPOINTMENT {
+        BIGINT id PK
+        BIGINT user_id FK
+        DATE date
+        TIME start_time
+        TIME end_time
+        VARCHAR(50) status
+    }
+
+    CONSTRAINTS {
+        BIGINT id PK
+        VARCHAR(50) enabledDays
+        INT maxPerSlot
+        BIGINT minutesBetweenSlots
+        TIME start
+        TIME end
+    }
+
+    APP_USER ||--o{ APPOINTMENT : "user_id"
+
+```
 
 ## Entité : AppUser
 - id **(clé primaire)**
