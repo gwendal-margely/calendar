@@ -54,11 +54,9 @@ public class AppController {
     public String loginUser(AppUser user, Model model) {
         AppUser existingUser = appUserService.findByUsername(user.getUsername());
         if (existingUser != null && existingUser.getPassword().equals(user.getPassword())) {
-            // Logique de connexion réussie
             model.addAttribute("user", existingUser);
             return "redirect:/calendar";
         } else {
-            // Logique de connexion échouée
             model.addAttribute("error", "Nom d'utilisateur ou mot de passe incorrect");
             return "login";
         }

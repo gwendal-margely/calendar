@@ -21,7 +21,6 @@ public class Constraints {
     public static LocalTime start = LocalTime.of(11, 0);
     public static LocalTime end = LocalTime.of(18, 0);
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

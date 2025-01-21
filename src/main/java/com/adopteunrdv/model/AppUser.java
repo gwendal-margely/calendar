@@ -16,7 +16,6 @@ public class AppUser {
     private String email;
     private String role;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

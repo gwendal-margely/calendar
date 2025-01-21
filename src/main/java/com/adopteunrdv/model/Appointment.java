@@ -23,7 +23,6 @@ public class Appointment {
     private LocalTime endTime;
     private String status;
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }

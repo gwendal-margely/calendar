@@ -192,7 +192,7 @@ RôleAdmin. Actions possibles :
 - role
 
 ## Entité : Appointment
-- id (clé primaire)
+- id **(clé primaire)**
 - user_id *(clé étrangère vers AppUser)*
 - date
 - startTime
