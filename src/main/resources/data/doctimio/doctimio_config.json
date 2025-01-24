@@ -1,0 +1,16 @@
+{
+  "siteName": "Doctimio",
+  "database": {
+    "url": "jdbc:postgresql://localhost:5432/doctimio",
+    "username": "gwendalmargelyetu",
+    "password": "moi"
+  },
+  "cssFile": "styles.css",
+  "logoFile": "logo.png",
+  "homeImage": "home_image.png",
+  "homeTextKey": "home.text",
+  "languageFiles": {
+    "fr_FR": "lang/messages_fr.properties",
+    "en_US": "lang/messages_en.properties"
+  }
+}

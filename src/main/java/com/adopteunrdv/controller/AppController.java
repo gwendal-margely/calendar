@@ -5,6 +5,7 @@ import com.adopteunrdv.model.Appointment;
 import com.adopteunrdv.model.Constraints;
 import com.adopteunrdv.service.AppUserService;
 import com.adopteunrdv.service.AppointmentService;
+import com.adopteunrdv.service.ConfigService;
 import com.adopteunrdv.service.ConstraintsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AppController {
-
     @Autowired
     private AppUserService appUserService;
 
@@ -29,9 +30,18 @@ public class AppController {
     @Autowired
     private ConstraintsService constraintsService;
 
+    @Autowired
+    private ConfigService configService;
+
     @GetMapping("/")
-    public String home() {
-        return "index";
+    public String home(Model model) {
+        Map<String, Object> config = configService.getConfig();
+        model.addAttribute("cssFile", config.get("cssFile"));
+        model.addAttribute("logoFile", config.get("logoFile"));
+        model.addAttribute("homeImage", config.get("homeImage"));
+        model.addAttribute("homeTextKey", config.get("homeTextKey"));
+        model.addAttribute("siteName", config.get("siteName"));
+        return "home";
     }
 
     @GetMapping("/login")
@@ -70,6 +80,12 @@ public class AppController {
         List<Appointment> appointments = appointmentService.findByDate(date);
         model.addAttribute("date", date);
         model.addAttribute("appointments", appointments);
+
+        Map<String, Object> config = configService.getConfig();
+        model.addAttribute("cssFile", config.get("cssFile"));
+        model.addAttribute("logoFile", config.get("logoFile"));
+        model.addAttribute("siteName", config.get("siteName"));
+
         return "calendar";
     }
 
@@ -86,6 +102,12 @@ public class AppController {
     public String listAppointments(Model model) {
         List<Appointment> appointments = appointmentService.findAll();
         model.addAttribute("appointments", appointments);
+
+        Map<String, Object> config = configService.getConfig();
+        model.addAttribute("cssFile", config.get("cssFile"));
+        model.addAttribute("logoFile", config.get("logoFile"));
+        model.addAttribute("siteName", config.get("siteName"));
+
         return "appointments";
     }
 

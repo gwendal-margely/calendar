@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="#{account.title}">Mon compte</title>
+</head>
+<body>
+<div th:replace="header.html :: header"></div>
+<div class="content">
+  <h2 th:text="#{account.title}">Mon compte</h2>
+  <p th:text="${user.username}">Nom d'utilisateur</p>
+  <p th:text="${user.email}">Email</p>
+  <!-- Ajouter d'autres détails du compte si nécessaire -->
+</div>
+</body>
+</html>
