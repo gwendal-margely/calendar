@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/${cssFile}}">
+</head>
+<body>
+<header th:fragment="header">
+  <div class="header-container">
+    <img th:src="@{${logoFile}}" alt="Logo" class="logo">
+    <h1 th:text="${siteName}">Site Name</h1>
+    <nav>
+      <a th:href="@{/}" th:text="#{header.home}">Accueil</a>
+      <a th:href="@{/calendar}" th:text="#{header.calendar}">Mon calendrier</a>
+      <a th:href="@{/account}" th:text="#{header.account}">Mon compte</a>
+      <a th:href="@{/logout}" th:text="#{header.logout}">Se déconnecter</a>
+    </nav>
+    <div class="language-selector">
+      <a th:href="@{/changeLanguage(lang='en')}" th:text="#{header.english}">English</a>
+      <a th:href="@{/changeLanguage(lang='fr')}" th:text="#{header.french}">Français</a>
+    </div>
+  </div>
+</header>
+</body>
+</html>

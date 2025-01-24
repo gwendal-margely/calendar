@@ -12,7 +12,7 @@
 <body>
 <jsp:include page="header.jsp" />
 <div class="content">
-    <img src="${pageContext.request.contextPath}/${homeImage}" alt="Home Image" class="home-image">
+    <img src="${pageContext.request.contextPath}/data/${siteName.toLowerCase()}/${homeImage}" alt="Home Image">
     <p><spring:message code="home.text" /></p>
 </div>
 </body>

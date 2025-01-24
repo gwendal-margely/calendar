@@ -1,7 +1,7 @@
 {
   "siteName": "Pooltastic",
   "database": {
-    "url": "jdbc:postgresql://localhost:5432/pooltastic",
+    "url": "jdbc:postgresql://localhost:5432/but3",
     "username": "gwendalmargelyetu",
     "password": "moi"
   },

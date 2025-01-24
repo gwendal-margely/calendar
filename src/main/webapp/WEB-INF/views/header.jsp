@@ -7,12 +7,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/${cssFile}">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/data/${siteName.toLowerCase()}/${cssFile}">
 </head>
 <body>
 <header>
     <div class="header-container">
-        <img src="${pageContext.request.contextPath}/${logoFile}" alt="Logo" class="logo">
+        <img src="${pageContext.request.contextPath}/data/${siteName.toLowerCase()}/${logoFile}" alt="Logo" class="logo">
         <h1>${siteName}</h1>
         <nav>
             <% if (request.getAttribute("user") != null) { %>
