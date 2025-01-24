@@ -3,18 +3,16 @@ package com.adopteunrdv.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.support.EncodedResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @Service
 public class ConfigService {
 
-    @Value("classpath:${link}")
+    @Value("classpath:${config.file}")
     private Resource configFile;
 
     private Map<String, Object> config;

@@ -1,6 +1,6 @@
-CREATE DATABASE tennisoclock;
+/* CREATE DATABASE tennisoclock; */
 
-\c tennisoclock
+/* \c tennisoclock */
 
 CREATE TABLE APP_USER (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,

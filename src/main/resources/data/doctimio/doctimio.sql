@@ -1,6 +1,6 @@
-CREATE DATABASE doctimio;
+/* CREATE DATABASE doctimio; */
 
-\c doctimio
+/* \c doctimio */
 
 CREATE TABLE APP_USER (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,
