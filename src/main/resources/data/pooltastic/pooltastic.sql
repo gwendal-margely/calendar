@@ -1,6 +1,6 @@
-/* CREATE DATABASE pooltastic; */
+CREATE DATABASE pooltastic;
 
-/* \c pooltastic */
+\c pooltastic
 
 CREATE TABLE APP_USER (
                           id BIGINT AUTO_INCREMENT PRIMARY KEY,

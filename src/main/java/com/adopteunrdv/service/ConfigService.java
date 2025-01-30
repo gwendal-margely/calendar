@@ -1,35 +1,39 @@
 package com.adopteunrdv.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class ConfigService {
 
-    @Value("classpath:${config.file}")
-    private Resource configFile;
+    @Value("${config.file}")
+    private String configFile;
 
-    private Map<String, Object> config;
+    public Map<String, Object> getConfig() throws IOException {
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        Resource resource = resolver.getResource("classpath:" + configFile);
+        String content = new String(resource.getInputStream().readAllBytes());
+        return parseConfig(content);
+    }
 
-    public Map<String, Object> getConfig() {
-        if (config == null) {
-            loadConfig();
-        }
+    private Map<String, Object> parseConfig(String content) {
+        Map<String, Object> config = new HashMap<>();
+        // Parse the JSON content and populate the config map
         return config;
     }
 
-    private void loadConfig() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try (InputStream inputStream = configFile.getInputStream()) {
-            config = objectMapper.readValue(inputStream, Map.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void saveConfig(String configName, Map<String, Object> config) throws IOException {
+        String configPath = "src/main/resources/data/" + configName.toLowerCase() + "/" + configName + "_config.json";
+        Files.createDirectories(Paths.get(configPath).getParent());
+        Files.write(Paths.get(configPath), config.toString().getBytes());
     }
 }

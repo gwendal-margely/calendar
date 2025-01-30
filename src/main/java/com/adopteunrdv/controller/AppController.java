@@ -8,19 +8,25 @@ import com.adopteunrdv.service.AppointmentService;
 import com.adopteunrdv.service.ConfigService;
 import com.adopteunrdv.service.ConstraintsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 public class AppController {
+
     @Autowired
     private AppUserService appUserService;
 
@@ -33,15 +39,13 @@ public class AppController {
     @Autowired
     private ConfigService configService;
 
+    @Value("${config.file}")
+    private String configFile;
+
     @GetMapping("/")
     public String home(Model model) {
-        Map<String, Object> config = configService.getConfig();
-        model.addAttribute("cssFile", config.get("cssFile"));
-        model.addAttribute("logoFile", config.get("logoFile"));
-        model.addAttribute("homeImage", config.get("homeImage"));
-        model.addAttribute("homeTextKey", config.get("homeTextKey"));
-        model.addAttribute("siteName", config.get("siteName"));
-        return "home";
+        model.addAttribute("isEditable", configFile == null || configFile.isEmpty());
+        return "index";
     }
 
     @GetMapping("/login")
@@ -80,12 +84,7 @@ public class AppController {
         List<Appointment> appointments = appointmentService.findByDate(date);
         model.addAttribute("date", date);
         model.addAttribute("appointments", appointments);
-
-        Map<String, Object> config = configService.getConfig();
-        model.addAttribute("cssFile", config.get("cssFile"));
-        model.addAttribute("logoFile", config.get("logoFile"));
-        model.addAttribute("siteName", config.get("siteName"));
-
+        model.addAttribute("isEditable", configFile == null || configFile.isEmpty());
         return "calendar";
     }
 
@@ -102,12 +101,7 @@ public class AppController {
     public String listAppointments(Model model) {
         List<Appointment> appointments = appointmentService.findAll();
         model.addAttribute("appointments", appointments);
-
-        Map<String, Object> config = configService.getConfig();
-        model.addAttribute("cssFile", config.get("cssFile"));
-        model.addAttribute("logoFile", config.get("logoFile"));
-        model.addAttribute("siteName", config.get("siteName"));
-
+        model.addAttribute("isEditable", configFile == null || configFile.isEmpty());
         return "appointments";
     }
 
@@ -121,5 +115,22 @@ public class AppController {
     public String saveConstraints(Constraints constraints) {
         constraintsService.save(constraints);
         return "redirect:/calendar";
+    }
+
+    @PostMapping("/uploadImage")
+    public String uploadImage(@RequestParam("file") MultipartFile file, @RequestParam("type") String type) throws IOException {
+        String uploadDir = "src/main/resources/data/";
+        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        File destFile = new File(uploadDir + fileName);
+        file.transferTo(destFile);
+        // Save the file path to the configuration
+        return "redirect:/";
+    }
+
+    @PostMapping("/saveConfig")
+    public String saveConfig(@RequestParam Map<String, String> config) throws IOException {
+        String configName = config.get("siteName");
+        configService.saveConfig(configName, config);
+        return "redirect:/";
     }
 }
