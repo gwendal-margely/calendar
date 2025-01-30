@@ -1,17 +1,16 @@
-# **Projet Non Alternants**
+# Projet Calendar
 
 ## Systèmes de gestion de rendez-vous en ligne
 
 ```
 S5.A.01 - Frameworks Web
-BUT3 - Info
-Philippe Mathieu
-2024–2025
+Informatique
+2024
 ```
 # Objectifs
 
 A la manière de prendreunrendezvous, de Doctolib ou de nombreux sites de prise de rendez-vous mis
-en place durant la criseCOVID-19, l’objectif de ce projet consiste à réaliser un site internet de gestion de
+en place durant la crise COVID-19, l’objectif de ce projet consiste à réaliser un site internet de gestion de
 rendez-vous multi-utilisateurs. Le site doit permettre d’une part de montrer aux utilisateurs les créneaux libres,
 d’autre part de permettre aux utilisateurs de saisir et gérer leurs rendez-vous, et évidemment de n’autoriser
 des rendez-vous que s’ils respectent les contraintes souhaitées pour ce site.
@@ -23,9 +22,6 @@ de créneaux chez le médecin (avec la contrainte “pas plus d’1 personne tou
 général : on ne cherche pas un site qui permet de créer plusieurs plannings. Si on souhaite faire deux plan-
 nings avec des contraintes différentes (par exemple l’un pour la piscine, l’autre pour le médecin), on créera 2
 sites WEB en changeant à l’initialisation leurs paramètres.
-
-Ce projet se fait en binôme.
-Rdv hebdomadaire : le jeudi 13h
 
 # Semaine 1 : les outils de base
 
@@ -48,8 +44,9 @@ Objectif : La modélisation
 ```
 Objectif : L’affichage d’un calendrier avec des cases réactives
 ```
-
-#### Étapes à suivre :
+```
+Étapes à suivre :
+```
 
 1. Créer un projet web MAVEN
 2. La gestion des dates :
@@ -181,6 +178,89 @@ RôleUser. Actions possibles :
 RôleAdmin. Actions possibles :
 — Toutes les actions possibles sur les réservations de tout le monde
 ```
+# Semaine 5
+
+```
+Objectif : Passage à Spring MVC
+```
+1. L’ensemble des actions réalisées dans le projet doit maintenant uniquement passer par des controleurs.
+    On veillera à exposer au minimum l’API Servlets dans les signatures des méthodes de composants
+    (donc éviter au maximumHttpServletRequest,HttpServletResponse,HttpSessionetc ...
+2. L’authentification se fait toujours à l’aide d’un filtre fait “à la main”. Sous Spring un filtre se déclare
+    comme dans le TP2 , il suffit juste d’ajouter l’annotation@ServletComponentScansur l’application
+    principale (juste sous@SpringBootApplication)
+3. La gestion du mail
+    — Ajoutez la dépendancespring-boot-starter-mail.
+    — Dansapplication.propertiesajouter les caractéristiques sur serveur de mail
+       spring.mail.host=smtp.univ-lille.fr
+       spring.mail.port=
+       spring.mail.username=prenom.nom.etu
+       spring.mail.password=xxxx
+       spring.mail.properties.mail.smtp.starttls.enable=true
+    — Il suffit ensuite d’injecter là où on en a besoin un objet de typeJavaMailSenderpuis rédiger et
+       envoyer le message à l’aide des méthodes associées. la methodesendse charge d’envoyer le
+       message. Par exemple :
+
+
+```
+@Autowired
+private JavaMailSender sender;
+```
+```
+MimeMessage message = sender.createMimeMessage();
+MimeMessageHelper helper = new MimeMessageHelper(message);
+helper.setFrom("xxx@univ-lille.fr");
+helper.setTo("dest@gmail.com");
+helper.setSubject("Hi");
+helper.setText("How are you?");
+sender.send(message);
+— Pour l’Université ça devrait fonctionner tel quel. Pour utiliser le serveur SMTP de Gmail, il faut
+d’abord créer un mot de passe d’application : Une explication se trouve ici : Aller sur son compte
+Google, puis rubrique Securité, puis validation en 2 étapes, puis tout en bas "mot de passe des ap-
+plications". Générer un nouveau mot de passe et utiliser ce mot de passe dansapplication.properties
+— Dans le champsFromattention à bien utiliser une adresse mail correspondant au fournisseur que
+vous avez déclaré! (adresse ulille avecsmtp.univ-lille.fr, adresse google avec smtp.gmail.com)
+```
+4. L’upload de documents
+    On souhaite notamment que les utilisateurs puissent charger leur photo dans leur profil. Pour cela on
+    pourra s’inspirer de nombreux exemples sur internet comme celui-ci.
+
+# Semaine 7
+
+```
+Objectif : Un controleur REST
+```
+Pour l’organisateur, réalisez un controleur REST qui fournit aussi bien en XML qu’en JSON (selon l’entête
+Accept) la liste des rdv d’une journée avec les personnes concernées :
+[http://localhost:8080/todayslist/{date}](http://localhost:8080/todayslist/{date})
+Cette méthode renverra une erreur si la date n’est pas au bon format.
+
+Pour les clients, réalisez un controleur REST qui fournit aussi bien en XML qu’en JSON (selon l’entête
+Accept) la liste des rdv futurs de la personne passée en paramètre :
+[http://localhost:8080/myappointments/{name}](http://localhost:8080/myappointments/{name})
+Cette méthode renverra une erreur si plusieurs personnes ont le même nom.
+
+```
+On ne s’occupera pas de l’authentification pour ces deux end-points. On considère qu’ils sont publics.
+```
+# Semaine 8
+
+```
+Objectif : Internationalisation
+```
+1. Assurer le responsive design de l’application.
+    A priori cet aspect a déjà été pris en compte lors de l’étape 1, il faut simplement s’assurer que l’en-
+    semble fonctionne toujours sur téléphone.
+2. Internationalisation de l’application.
+    On assurera que l’ensemble des mots utilisés dans l’interface sont gérés dans des fichiers properties,
+    1 par langue, et que l’application s’adapte à la Locale du navigateur. On assurera au moins 3 langues -
+    Fr, GB, SP. La JSTL fournit un ensemble de tags spécifiques pour celafmtet Spring fournit sa propre
+    librairiespring:message. On pourra s’inspirer des trois documentations suivantes :
+    — https://phrase.com/blog/posts/internationalization-basic-jsp-servlet/
+
+
+— https://www.baeldung.com/spring-boot-internationalization
+— https://phrase.com/blog/posts/internationalization-spring-mvc/
 
 # Base de Donnée MCD
 
